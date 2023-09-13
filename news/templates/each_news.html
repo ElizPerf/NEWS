@@ -1,0 +1,22 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block content %}
+   <h1>Current news</h1>
+   <!-- Используем переданную из представления переменную time_now
+   и применяем к ней фильтр date. По назначению этот фильтр очень похож
+   на метод strftime у объекта datetime в Python — вывод времени
+   в указанном формате. -->
+
+               <h2>{{ each_news.title|censor }}</h2>
+               <h3>{{ each_news.dateCreation }}</h3>
+               <h4>{{ each_news.text|censor }}</h4>
+
+
+
+ {% endblock content %}
