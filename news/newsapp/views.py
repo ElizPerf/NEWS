@@ -1,64 +1,51 @@
 from datetime import datetime
 
-# Импортируем класс, который говорит нам о том,
-# что в этом представлении мы будем выводить список объектов из БД
-from django.views.generic import ListView, DetailView
-from .models import *
+from django.urls import reverse_lazy
 
-bad_names = ['fatty', 'allergies', 'marijuana']
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+
+from .filters import PostFilter
+from .forms import PostForm
+from .models import Post
 
 class NewsList(ListView):
-    # Указываем модель, объекты которой мы будем выводить
     model = Post
-    # Поле, которое будет использоваться для сортировки объектов
     ordering = '-dateCreation'
-    # Указываем имя шаблона, в котором будут все инструкции о том,
-    # как именно пользователю должны быть показаны наши объекты
     template_name = 'news.html'
-    # Это имя списка, в котором будут лежать все объекты.
-    # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
     context_object_name = 'news'
+    paginate_by = 3
 
-    # Метод get_context_data позволяет нам изменить набор данных,
-    # который будет передан в шаблон.
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = PostFilter(self.request.GET, queryset)
+        return self.filterset.qs
+
     def get_context_data(self, **kwargs):
-        # С помощью super() мы обращаемся к родительским классам
-        # и вызываем у них метод get_context_data с теми же аргументами,
-        # что и были переданы нам.
-        # В ответе мы должны получить словарь.
         context = super().get_context_data(**kwargs)
-        # К словарю добавим текущую дату в ключ 'time_now'.
         context['time_now'] = datetime.utcnow()
-        # Добавим ещё одну пустую переменную,
-        # чтобы на её примере рассмотреть работу ещё одного фильтра.
-        context['next_sale'] = None
+        context['filterset'] = self.filterset
         return context
 
-
 class NewsDetail(DetailView):
-    # Модель всё та же, но мы хотим получать информацию по отдельному товару
     model = Post
-    # Используем другой шаблон — each_news.html
     template_name = 'each_news.html'
-    # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'each_news'
 
 
-# class AuthorsPage(ListView):
-#     model = Author  # queryset = Author.objects.all()
-#     context_object_name = "Authors"
-#     template_name = 'authors.html'
+class PostCreate(CreateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'news_edit.html'
 
 
-# class PostDetail(View):
-#     def get(self, request, pk):
-#         ps = Post.objects.get(id=pk)
-#         return render(request, "posts.html", {'ps':ps})
-#
-#
-# def news_page_list(request):
-#     newslist = Post.objects.all().order_by('-rating')[:6]
-#     return render(request, 'news.html', {'newslist': newslist})
-#
-# def pageNotFound(request, exception):
-#     return HttpResponseNotFound('<h1>Page not found</h1>')
+class PostUpdate(UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'news_edit.html'
+
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'news_delete.html'
+    success_url = reverse_lazy('news_list')
