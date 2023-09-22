@@ -25,12 +25,21 @@ News
    </form>
 
    <hr>
+
+    {% if perms.simpleapp.add_product %}
+    <a href="{% url 'news_create' %}">Add news</a>
+    {% endif %}
+
    {% if news %}
        <table>
            <tr>
                <td>title</td>
                <td>dateCreation</td>
                <td>text</td>
+
+               {% if perms.newsapp.change_post or perms.newsapp.delete_post %}
+               <td>Actions</td>
+               {% endif %}
            </tr>
 
            {% for each_news in news %}
@@ -38,6 +47,17 @@ News
                <td>{{ each_news.title|censor }}</td>
                <td>{{ each_news.dateCreation }}</td>
                <td>{{ each_news.text|censor|truncatewords:20 }}</td>
+
+               <td>
+                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.newsapp.change_post %}
+                    <a href="{% url 'news_update' pk=each_news.id %}">Change</a>
+                    {% endif %}
+                    {% if perms.newsapp.delete_post %}
+                    <a href="{% url 'news_delete' each_news.id %}">Delete</a>
+                    {% endif %}
+               </td>
+
            </tr>
            {% endfor %}
 
