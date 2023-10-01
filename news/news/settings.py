@@ -156,7 +156,30 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "sf.projects@yandex.ru"
+EMAIL_HOST_PASSWORD = "uxkqgqmeamcqonae"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = 'sf.projects@yandex.ru'
+
+SERVER_EMAIL = "sf.projects@yandex.ru"
+MANAGERS = (
+    ('Eliz', 'LizaNaumtseva@yandex.ru'),
+    ('Liz', 'elizabeth150598@gmail.com'),
+)
+
+# ADMINS = (
+#     ('Eliz', 'LizaNaumtseva@yandex.ru'),
+# )

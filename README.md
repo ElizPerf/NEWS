@@ -1,3 +1,3 @@
-See the master branch
+Enjoy the project!!!
 
 The project will be updated for many parameters later...
