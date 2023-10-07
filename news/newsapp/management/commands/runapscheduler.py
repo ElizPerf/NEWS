@@ -14,7 +14,7 @@ from django_apscheduler.jobstores import DjangoJobStore
 from django_apscheduler.models import DjangoJobExecution
 
 from newsapp.models import *
-from news import settings
+from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +40,9 @@ def my_job():
         to=subscriptions,
     )
 
+    msg.attach_alternative(html_content, 'text/html')
+    msg.send()
+
 
 # функция, которая будет удалять неактуальные задачи
 def delete_old_job_executions(max_age=604_800):
@@ -57,7 +60,7 @@ class Command(BaseCommand):
         scheduler.add_job(
             my_job,
             trigger=CronTrigger(
-            day_of_week="sat", hour="19", minute="11"
+            day_of_week="fri", hour="18", minute="00"
             ),
             # То же, что и интервал, но задача тригера таким образом более понятна django
             id="my_job",  # уникальный айди
