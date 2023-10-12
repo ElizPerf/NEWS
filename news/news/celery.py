@@ -12,7 +12,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'action_every_monday_8am': {
-        'task': 'mail_sender.tasks.mailing',
+        'task': 'weekly_send_emails.tasks.mailing',
         'schedule': crontab(hour='13', minute='3', day_of_week='wednesday'),
     }
 }
