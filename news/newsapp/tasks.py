@@ -62,6 +62,3 @@ def weekly_send_emails():
 
     msg.attach_alternative(html_content, 'text/html')
     msg.send()
-
-
-

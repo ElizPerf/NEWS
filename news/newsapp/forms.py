@@ -4,6 +4,7 @@ from .models import Post
 
 class PostForm(forms.ModelForm):
     title = forms.CharField(min_length=10)
+
     class Meta:
         model = Post
         fields = '__all__'

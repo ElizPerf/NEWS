@@ -19,7 +19,6 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
-# наша задача по выводу текста на экран
 def my_job():
     today = timezone.now()
     last_week = today - datetime.timedelta(days=7)

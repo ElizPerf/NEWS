@@ -133,6 +133,115 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'style': '{',
+    'formatters': {
+        'simple': {
+            'format': '%(asctime) %(levelname)s %(message)s',
+            'datetime': '%m %d %H:%M:%S',
+        },
+        'hard': {
+            'format': '%(asctime) %(levelname)s %(message)s %(pathname)',
+            'datetime': '%m %d %H:%M:%S',
+        },
+        'difficult': {
+            'format': '%(asctime) %(levelname)s %(message)s %(pathname) %(exc_info)',
+            'datetime': '%m %d %H:%M:%S',
+        },
+        'general': {
+            'format': '%(asctime) %(levelname)s %(module) %(message)s',
+            'datetime': '%m %d %H:%M:%S',
+        },
+        'errors': {
+            'format': '%(asctime) %(levelname)s %(message)s %(pathname) %()',
+            'datetime': '%m %d %H:%M:%S',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'consoles': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'consoleh': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'hard',
+        },
+        'consoled': {
+            'level': 'ERROR',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'difficult',
+        },
+        'general': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'general',
+        },
+        'errors': {
+            'level': 'ERROR',
+            'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'errors.log',
+            'formatter': 'errors',
+        },
+        'security': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+            'formatter': 'general',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'errors',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['consoles', 'consoleh', 'consoled', 'general'],
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['mail_admins', 'errors'],
+            'propagate': False,
+        },
+        'django.server': {
+            'handlers': ['mail_admins', 'errors'],
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['errors'],
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['errors'],
+            'propagate': True,
+        },
+        'django.security': {
+            'handlers': ['security'],
+            'propagate': True,
+        }
+    }
+}
+
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
