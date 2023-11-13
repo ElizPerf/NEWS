@@ -1,0 +1,4 @@
+2023-11-13 21:03:22,267 INFO "GET /news/ HTTP/1.1" 200 3275 D:\PycharmProjects\FINAL_PROJECTS\DJANGO\NEWS\venv\Lib\site-packages\django\core\servers\basehttp.py None 
+2023-11-13 21:03:22,636 WARNING "GET /favicon.ico HTTP/1.1" 404 2427 D:\PycharmProjects\FINAL_PROJECTS\DJANGO\NEWS\venv\Lib\site-packages\django\core\servers\basehttp.py None 
+2023-11-13 21:03:27,123 INFO "GET /news/ HTTP/1.1" 200 3275 D:\PycharmProjects\FINAL_PROJECTS\DJANGO\NEWS\venv\Lib\site-packages\django\core\servers\basehttp.py None 
+2023-11-13 21:03:30,802 INFO "GET /news/?title__icontains=&categoryType=&postCategory=1&date= HTTP/1.1" 200 3274 D:\PycharmProjects\FINAL_PROJECTS\DJANGO\NEWS\venv\Lib\site-packages\django\core\servers\basehttp.py None 

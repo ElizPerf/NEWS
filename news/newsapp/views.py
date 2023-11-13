@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 
 from django.utils.translation import gettext as _
+from django.utils.translation import pgettext_lazy
 
 from django.db.models import Exists, OuterRef
 from django.shortcuts import render

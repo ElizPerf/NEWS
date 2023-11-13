@@ -91,6 +91,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'news.wsgi.application'
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('ru', 'Русский'),
+]
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -231,7 +236,7 @@ LOGGING = {
 
     'handlers': {
         'console_debug': {
-            'level': 'INFO', #вернуть DEBUG
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
             'formatter': 'format_debug',
@@ -260,7 +265,7 @@ LOGGING = {
         },
 
         'errors_file': {
-            'level': 'ERROR', # вернуть ERROR
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
             'formatter': 'format_error_critical',
             'filename': 'logs/errors.log',
@@ -296,13 +301,13 @@ LOGGING = {
         'django.request': {
             'handlers': ['errors_file', 'mail_admins'],
             'level': 'ERROR',
-            'propagate': False,
+            'propagate': True,
         },
 
         'django.server': {
             'handlers': ['errors_file', 'mail_admins'],
             'level': 'ERROR',
-            'propagate': False,
+            'propagate': True,
         },
 
         'django.template': {
@@ -320,7 +325,7 @@ LOGGING = {
         'django.security': {
             'handlers': ['security_file'],
             'level': 'INFO',
-            'propagate': False,
+            'propagate': True,
         },
     }
 }
